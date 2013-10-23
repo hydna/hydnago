@@ -1,0 +1,41 @@
+Go bindings for Hydna
+=====================
+
+This first version of our client library for Go implements support for the
+Hydna Push API. Future versions will include support for the full set
+of features.
+
+More info: https://www.hydna.com/
+
+
+Usage
+-----
+The hydna-package exposes two functions:
+
+    package main
+
+    import "bytes"
+    import "github.com/hydna/hydnago"
+
+    func main() {
+        data := bytes.NewBufferString("Hello world from GO!")
+
+        // Send a message
+        hydna.Send("testing.hydna.net/", data)
+
+        // Emit a signal
+        hydna.Emit("testing.hydna.net/", data)
+    }
+
+
+Test installation
+-----------------
+
+Test using `go test`
+
+    $ go test github.com/hydna/hydnago
+
+
+Issues and suggestions
+----------------------
+Please report to https://github.com/jfd/hydnago/issues
