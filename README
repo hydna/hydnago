@@ -39,3 +39,11 @@ Test using `go test`
 Issues and suggestions
 ----------------------
 Please report to https://github.com/jfd/hydnago/issues
+
+
+Contributions
+-------------
+
+Before commit, run:
+
+    $ gofmt -tabwidth=4 -tabs=false -w=true ./*.go
