@@ -6,10 +6,9 @@ import "io/ioutil"
 import "net/http"
 import "strings"
 
-
 func Send(url string, body io.Reader) error {
 
-    url = prefixUrl(url);
+    url = prefixUrl(url)
 
     if body == nil {
         return errors.New("Body cannot be nil")
@@ -24,10 +23,9 @@ func Send(url string, body io.Reader) error {
     return checkResponse(resp)
 }
 
-
 func Emit(url string, body io.Reader) error {
 
-    url = prefixUrl(url);
+    url = prefixUrl(url)
 
     if body == nil {
         return errors.New("Body cannot be nil")
@@ -42,16 +40,14 @@ func Emit(url string, body io.Reader) error {
     return checkResponse(resp)
 }
 
-
 func prefixUrl(url string) string {
     if strings.HasPrefix(url, "http://") == false ||
-       strings.HasPrefix(url, "https://") == false {
+        strings.HasPrefix(url, "https://") == false {
         return "http://" + url
     }
 
     return url
 }
-
 
 func doRequest(url string, body io.Reader, emit bool) (*http.Response, error) {
 
@@ -64,17 +60,16 @@ func doRequest(url string, body io.Reader, emit bool) (*http.Response, error) {
     }
 
     if emit {
-        req.Header.Add("X-Emit", "yes");
+        req.Header.Add("X-Emit", "yes")
     }
 
     return client.Do(req)
 }
 
-
 func checkResponse(resp *http.Response) error {
 
     if resp.StatusCode == 400 {
-        body, err := ioutil.ReadAll(resp.Body);
+        body, err := ioutil.ReadAll(resp.Body)
         if err != nil {
             return err
         }
