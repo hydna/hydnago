@@ -8,12 +8,6 @@ import "strings"
 
 func Send(url string, body io.Reader) error {
 
-    url = prefixUrl(url)
-
-    if body == nil {
-        return errors.New("Body cannot be nil")
-    }
-
     resp, err := doRequest(url, body, false)
 
     if err != nil {
@@ -24,12 +18,6 @@ func Send(url string, body io.Reader) error {
 }
 
 func Emit(url string, body io.Reader) error {
-
-    url = prefixUrl(url)
-
-    if body == nil {
-        return errors.New("Body cannot be nil")
-    }
 
     resp, err := doRequest(url, body, true)
 
@@ -50,6 +38,12 @@ func prefixUrl(url string) string {
 }
 
 func doRequest(url string, body io.Reader, emit bool) (*http.Response, error) {
+
+    url = prefixUrl(url)
+
+    if body == nil {
+        return nil, errors.New("Body cannot be nil")
+    }
 
     client := &http.Client{}
 
