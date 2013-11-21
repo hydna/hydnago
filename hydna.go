@@ -5,6 +5,11 @@ import "io"
 import "io/ioutil"
 import "net/http"
 import "strings"
+import "bytes"
+
+
+const payload_max_size = 65530
+
 
 func Send(url string, body io.Reader) error {
 
@@ -45,9 +50,17 @@ func doRequest(url string, body io.Reader, emit bool) (*http.Response, error) {
         return nil, errors.New("Body cannot be nil")
     }
 
+    all_bytes, err := ioutil.ReadAll(body)
+    
+    if err != nil || len(all_bytes) > payload_max_size {
+        return nil, errors.New("Payload max size reached");
+    }
+
+    data := bytes.NewBuffer(all_bytes)
+
     client := &http.Client{}
 
-    req, err := http.NewRequest("POST", url, body)
+    req, err := http.NewRequest("POST", url, data)
 
     if err != nil {
         return nil, err
